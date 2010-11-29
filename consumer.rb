@@ -1,22 +1,22 @@
-
 class Consumer
-  def initialize
+
+  def initialize(se, param)
     @search_engine = se
-    @record = nil
+    @param = param
   end
 
   def start
+    run
   end
 
   def stop
   end
 
   def run
-    manifest = transform(@record)
-    se.register(manifest)
+    results = @search_engine.find(@param)
+    results.each do |r|
+      owner = @search_engine.get_owner(r)
+    end
   end
 
-  def transform(record)
-    return nil
-  end
 end

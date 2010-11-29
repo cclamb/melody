@@ -1,7 +1,7 @@
 
 class Producer
   def initialize(search_engine, record)
-    search_engine.register(record)
+    search_engine.register(record, self)
   end
 
   def start
