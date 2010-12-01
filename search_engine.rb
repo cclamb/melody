@@ -16,7 +16,7 @@ class SearchEngine
   def find(param)
     results = []
     @filters.each do |f|
-      @records.each { |r| results.push(r) if f.filter(r, param) == true }
+      @records.each { |r| results.push(r) if f.match(r, param) == true }
     end
     return results
   end
