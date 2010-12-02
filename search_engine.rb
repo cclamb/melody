@@ -8,7 +8,11 @@ class SearchEngine
   end
 
   def register(record, consumer)
-    @filters.push(record.filter)
+    exists = false
+    @filters.each { |f| exists = true if f.instance_of?(record.filter.class) }
+
+    @filters.push(record.filter) unless exists
+
     @records.push(record)
     @owners[record] = consumer
   end
