@@ -85,12 +85,21 @@ class NegotiationManagerTest < Test::Unit::TestCase
   def test_initiate_negitiation_7
     is_failed = false
     h = {:init_party => 'foo', :other_party => 'bar', :record => TrueRecord.new}
-    @mgr.initiate_negotiation(h) { puts 'x' }
+    @mgr.initiate_negotiation(h) { |h| puts 'x' }
     callbacks = @mgr.instance_variable_get('@callbacks')
     assert_equal(1, callbacks.count)
-    @mgr.initiate_negotiation(h) { puts 'y' }
+    @mgr.initiate_negotiation(h) { |h| puts 'y' }
     assert_equal(2, callbacks.count)
     callbacks.each { |k,v| assert(v.is_a?(Proc)) } 
+  end
+
+  def test_notify_producer
+    is_called = false
+    h = {:init_party => 'foo', :other_party => 'bar', :record => TrueRecord.new}
+    @mgr.initiate_negotiation(h) { |h| is_called = true if h }
+    id = @mgr.instance_variable_get('@last_id')
+    @mgr.notify_producer({}, id)
+    assert(is_called)
   end
 
 end

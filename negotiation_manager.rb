@@ -24,5 +24,9 @@ class NegotiationManager
   def generate_negotiation_id
     return @last_id = @last_id + 1
   end
+
+  def notify_producer(ctx, id)
+    @callbacks[id].call(ctx)
+  end
   
 end
