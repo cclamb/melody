@@ -6,7 +6,7 @@ require 'record'
 class NegotiationManagerTest < Test::Unit::TestCase
 
   def setup
-    @mgr = NegotiationManager.new
+    @mgr = NegotiationManager.new(nil)
   end
   
   def test_generate_negotiation_id

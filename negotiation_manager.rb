@@ -1,8 +1,9 @@
 class NegotiationManager
   
-  def initialize
+  def initialize(concrete_negotiator)
     @last_id = 0
     @callbacks = {}
+    @concrete_negotiator = concrete_negotiator if concrete_negotiator
   end
   
   def initiate_negotiation(ctx, &callback)
