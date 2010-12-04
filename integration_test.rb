@@ -10,8 +10,9 @@ class IntegrationTest < Test::Unit::TestCase
     @users.each { |u| @se.register(TrueRecord.new, u) }
   end
   
-  def test_acquisition
-    results = @se.find(nil)
-    puts results
+  def test_acquistion_1
+    
   end
+
+  
 end
