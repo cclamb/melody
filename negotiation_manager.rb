@@ -3,7 +3,7 @@ class NegotiationManager
   def initialize(concrete_negotiator)
     @last_id = 0
     @callbacks = {}
-    @concrete_negotiator = concrete_negotiator if concrete_negotiator
+    @concrete_negotiator = concrete_negotiator
   end
   
   def initiate_negotiation(ctx, &callback)
@@ -18,6 +18,9 @@ class NegotiationManager
     raise ArgumentError, 'Callback block must be defined' unless callback
 
     id = generate_negotiation_id
+    ctx[:id] = id
+
+    @concrete_negotiator.initiate_negotiation(ctx) if @concrete_negotiator
 
     @callbacks[id] = callback
   end
