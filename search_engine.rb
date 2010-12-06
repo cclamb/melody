@@ -2,7 +2,7 @@
 class SearchEngine
 
   def initialize
-    @records = []
+    @records = {}
     @filters = []
     @owners = {}
   end
@@ -13,20 +13,24 @@ class SearchEngine
 
     @filters.push(record.filter) unless exists
 
-    @records.push(record)
+    @records[record.get_id] = record
     @owners[record] = consumer
   end
 
   def find(param)
     results = []
     @filters.each do |f|
-      @records.each { |r| results.push(r) if f.match(r, param) == true }
+      @records.each { |k,v| results.push(k) if f.match(v, param) == true }
     end
     return results
   end
 
   def get_owner(record)
     return @owners[record]
+  end
+
+  def get_owner_from_id(id)
+    return @owners[@records[id]]
   end
 
 end

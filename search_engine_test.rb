@@ -31,12 +31,17 @@ class IntegrationTest < Test::Unit::TestCase
     se = SearchEngine.new
     users = ['steve', 'frank', 'sue']
     links = {}
+    id_links = {}
     users.each do |u| 
       record = TrueRecord.new
       se.register(record, u)
       links[record] = u
+      id_links[record.get_id] = u
     end
-    return { :engine => se, :users => users, :links => links }
+    return { :engine => se, 
+      :users => users, 
+      :links => links, 
+      :id_links => id_links }
   end
 
   def test_register_1
@@ -60,7 +65,6 @@ class IntegrationTest < Test::Unit::TestCase
     ctx = initialize_true_search_engine
     results = ctx[:engine].find(nil)
     assert_equal(3, results.count)
-    results.each { |r| assert(r.instance_of?(TrueRecord)) }
   end
 
   def test_find_2
@@ -73,9 +77,6 @@ class IntegrationTest < Test::Unit::TestCase
     ctx = initialize_mix_search_engine
     results = ctx[:engine].find(nil)
     assert_equal(4, results.count)
-    results.each do |r| 
-      assert(r.instance_of?(TrueRecord) || r.instance_of?(FalseRecord))
-    end
   end
 
   def test_lookup_producer
@@ -84,6 +85,16 @@ class IntegrationTest < Test::Unit::TestCase
     results.each do |r|
       user = ctx[:links][r]
       retrieved_user = ctx[:engine].get_owner(r)
+      assert_equal(user, retrieved_user)
+    end
+  end
+
+  def test_lookup_producer_from_id
+    ctx = initialize_true_traced_search_engine
+    results = ctx[:engine].find(nil)
+    results.each do |r|
+      user = ctx[:id_links][r]
+      retrieved_user = ctx[:engine].get_owner_from_id(r)
       assert_equal(user, retrieved_user)
     end
   end

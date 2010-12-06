@@ -51,7 +51,7 @@ class NegotiationManagerTest < Test::Unit::TestCase
 
   def test_initiate_negitiation_4
     is_failed = false
-    h = {:other_party => 'foo', :record => 'bar'}
+    h = {:other_party => 'foo', :record_id => 'bar'}
     begin
       @mgr.initiate_negotiation(h)
     rescue
@@ -62,7 +62,7 @@ class NegotiationManagerTest < Test::Unit::TestCase
 
   def test_initiate_negitiation_5
     is_failed = false
-    h = {:init_party => 'foo', :record => 'bar'}
+    h = {:init_party => 'foo', :record_id => 'bar'}
     begin
       @mgr.initiate_negotiation(h)
     rescue
@@ -73,7 +73,7 @@ class NegotiationManagerTest < Test::Unit::TestCase
 
   def test_initiate_negitiation_6
     is_failed = false
-    h = {:init_party => 'foo', :other_party => 'bar', :record => TrueRecord.new}
+    h = {:init_party => 'foo', :other_party => 'bar', :record_id => 0}
     begin
       @mgr.initiate_negotiation(h)
     rescue
@@ -84,7 +84,7 @@ class NegotiationManagerTest < Test::Unit::TestCase
 
   def test_initiate_negitiation_7
     is_failed = false
-    h = {:init_party => 'foo', :other_party => 'bar', :record => TrueRecord.new}
+    h = {:init_party => 'foo', :other_party => 'bar', :record_id => 1}
     @mgr.initiate_negotiation(h) { |h| puts 'x' }
     callbacks = @mgr.instance_variable_get('@callbacks')
     assert_equal(1, callbacks.count)
@@ -95,7 +95,7 @@ class NegotiationManagerTest < Test::Unit::TestCase
 
   def test_notify_producer
     is_called = false
-    h = {:init_party => 'foo', :other_party => 'bar', :record => TrueRecord.new}
+    h = {:init_party => 'foo', :other_party => 'bar', :record_id => 2}
     @mgr.initiate_negotiation(h) { |h| is_called = true if h }
     id = @mgr.instance_variable_get('@last_id')
     @mgr.notify_producer({}, id)

@@ -9,9 +9,9 @@ class NegotiationManager
   def initiate_negotiation(ctx, &callback)
     other_party = ctx[:other_party]
     init_party = ctx[:init_party]
-    record = ctx[:record]
+    record_id = ctx[:record_id]
 
-    if other_party == nil || init_party == nil || record == nil
+    if other_party == nil || init_party == nil || record_id == nil
       raise ArgumentError, 'Must define parties and record'
     end
 
