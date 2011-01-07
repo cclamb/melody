@@ -65,25 +65,25 @@ class IntegrationTest < Test::Unit::TestCase
 
   def test_find_1
     ctx = initialize_true_search_engine
-    results = ctx[:engine].find(nil)
+    results = ctx[:engine].find
     assert_equal(3, results.count)
   end
 
   def test_find_2
     ctx = initialize_false_search_engine
-    results = ctx[:engine].find(nil)
+    results = ctx[:engine].find
     assert_equal(0, results.count)
   end
 
   def test_find_3
     ctx = initialize_mix_search_engine
-    results = ctx[:engine].find(nil)
+    results = ctx[:engine].find
     assert_equal(4, results.count)
   end
 
   def test_lookup_producer
     ctx = initialize_true_traced_search_engine
-    results = ctx[:engine].find(nil)
+    results = ctx[:engine].find
     results.each do |r|
       user = ctx[:links][r]
       retrieved_user = ctx[:engine].get_owner(r)
@@ -93,7 +93,7 @@ class IntegrationTest < Test::Unit::TestCase
 
   def test_lookup_producer_from_id
     ctx = initialize_true_traced_search_engine
-    results = ctx[:engine].find(nil)
+    results = ctx[:engine].find
     results.each do |r|
       user = ctx[:id_links][r]
       retrieved_user = ctx[:engine].get_owner_from_id(r)

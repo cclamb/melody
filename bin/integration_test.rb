@@ -11,11 +11,11 @@ class IntegrationTest < Test::Unit::TestCase
     @users = ['steve', 'frank', 'sue']
     @se = SearchEngine.new
     @users.each { |u| @se.register(TrueRecord.new, u) }
-    @nm = NegotiationManager.new(nil)
+    @nm = NegotiationManager.new(SimpleNegotiationManager.new)
   end
   
   def test_acquistion_consumer
-    results = @se.find(nil)
+    results = @se.find
 
     result_queue = []
     results.each do |r|
@@ -24,7 +24,14 @@ class IntegrationTest < Test::Unit::TestCase
       @nm.initiate_negotiation(ctx) { |ctx| result_queue.push(ctx) }
     end
 
+puts '==> Result Queue: ', result_queue
     # Now we need to get the actual record bundle to place in a package bundle
   end
 
+end
+
+class SimpleNegotiationManager
+  def initiate_negotiation(ctx)
+    puts '==> ctx', ctx
+  end
 end

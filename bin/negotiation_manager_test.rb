@@ -104,4 +104,8 @@ class NegotiationManagerTest < Test::Unit::TestCase
     assert(is_called)
   end
 
+  def test_callback
+    
+  end
+
 end

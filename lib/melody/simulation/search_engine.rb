@@ -17,7 +17,7 @@ class SearchEngine
     @owners[record] = consumer
   end
 
-  def find(param)
+  def find(param = nil)
     results = []
     @filters.each do |f|
       @records.each { |k,v| results.push(k) if f.match(v, param) == true }

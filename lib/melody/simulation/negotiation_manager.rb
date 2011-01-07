@@ -1,6 +1,6 @@
 class NegotiationManager
   
-  def initialize(concrete_negotiator)
+  def initialize(concrete_negotiator = nil)
     @last_id = 0
     @callbacks = {}
     @concrete_negotiator = concrete_negotiator
@@ -20,7 +20,14 @@ class NegotiationManager
     id = generate_negotiation_id
     ctx[:id] = id
 
-    @concrete_negotiator.initiate_negotiation(ctx) if @concrete_negotiator
+    if @concrete_negotiator
+      @concrete_negotiator.initiate_negotiation(ctx) do |result_ctx|
+        return_ctx = {:result => result_ctx[:result],
+          :record_id => result_ctx[:record_id],
+          :other_party => result_ctx[:other_party]}
+         @callbacks[result_ctx[:id]].call(return_ctx)
+      end
+    end
 
     @callbacks[id] = callback
   end
