@@ -1,4 +1,4 @@
-require 'filter'
+require 'melody/simulation/filter'
 
 class TrueRecord
   def filter

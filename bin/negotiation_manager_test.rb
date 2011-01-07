@@ -1,9 +1,9 @@
-require 'test/unit'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 
-require 'medical_sim/simulation/negotiation_manager'
-require 'medical_sim/simulation/record'
+require 'test/unit'
+require 'melody/simulation/negotiation_manager'
+require 'melody/simulation/record'
 
 class NegotiationManagerTest < Test::Unit::TestCase
 

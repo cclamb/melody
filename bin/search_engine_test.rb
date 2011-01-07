@@ -1,7 +1,9 @@
-require 'test/unit'
 
-require 'search_engine'
-require 'record'
+$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
+
+require 'test/unit'
+require 'melody/simulation/search_engine'
+require 'melody/simulation/record'
 
 class IntegrationTest < Test::Unit::TestCase
 
