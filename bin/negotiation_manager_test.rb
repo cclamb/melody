@@ -114,7 +114,7 @@ class NegotiationManagerTest < Test::Unit::TestCase
     end.new
     mgr = NegotiationManager.new(cn)
     h = {:init_party => 'foo', :other_party => 'bar', :record_id => 2}
-    mgr.initiate_negotiation(h) { |h| is_called = true if h }
+    mgr.initiate_negotiation(h) { |h| is_called = h[:result] if h }
     assert(is_called)
   end
 
