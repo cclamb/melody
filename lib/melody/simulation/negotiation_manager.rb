@@ -20,6 +20,8 @@ class NegotiationManager
     id = generate_negotiation_id
     ctx[:id] = id
 
+    @callbacks[id] = callback
+
     if @concrete_negotiator
       @concrete_negotiator.initiate_negotiation(ctx) do |result_ctx|
         return_ctx = {:result => result_ctx[:result],
@@ -29,7 +31,6 @@ class NegotiationManager
       end
     end
 
-    @callbacks[id] = callback
   end
   
   def generate_negotiation_id

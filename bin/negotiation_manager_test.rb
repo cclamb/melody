@@ -8,7 +8,7 @@ require 'melody/simulation/record'
 class NegotiationManagerTest < Test::Unit::TestCase
 
   def setup
-    @mgr = NegotiationManager.new(nil)
+    @mgr = NegotiationManager.new
   end
   
   def test_generate_negotiation_id
@@ -105,7 +105,17 @@ class NegotiationManagerTest < Test::Unit::TestCase
   end
 
   def test_callback
-    
+    is_called = false
+    cn = Class.new do
+      def initiate_negotiation(ctx, &cb)
+        ctx[:result => true]
+        cb.call(ctx)
+      end
+    end.new
+    mgr = NegotiationManager.new(cn)
+    h = {:init_party => 'foo', :other_party => 'bar', :record_id => 2}
+    mgr.initiate_negotiation(h) { |h| is_called = true if h }
+    assert(is_called)
   end
 
 end
